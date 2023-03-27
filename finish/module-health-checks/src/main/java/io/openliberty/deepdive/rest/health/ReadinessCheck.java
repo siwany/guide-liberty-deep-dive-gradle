@@ -12,17 +12,12 @@
 // tag::ReadinessCheck[]
 package io.openliberty.deepdive.rest.health;
 
+import java.time.LocalDateTime;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.health.Readiness;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
-import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
-
-import java.io.IOException;
-import java.net.Socket;
 
 // tag::Readiness[]
 @Readiness
