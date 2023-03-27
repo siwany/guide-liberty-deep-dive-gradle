@@ -40,18 +40,12 @@ COPY --chown=1001:0 \
 COPY --chown=1001:0 \
 # end::war-userID[]
     # tag::inventory-war[]
-    target/inventory.war \
+    build/libs/inventory.war \
     # end::inventory-war[]
     # tag::config-apps[]
     /config/apps
     # end::config-apps[]
 # end::copy-war[]
-
-# tag::copy-postgres[]
-COPY --chown=1001:0 \
-    target/liberty/wlp/usr/shared/resources/*.jar \
-    /opt/ol/wlp/usr/shared/resources/
-# end::copy-postgres[]
 # end::copy[]
 
 USER 1001
