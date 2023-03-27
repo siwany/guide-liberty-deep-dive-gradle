@@ -36,7 +36,6 @@ import io.openliberty.deepdive.rest.model.SystemData;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -103,7 +102,6 @@ public class SystemResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     // tag::metricsAddSystem[]
     @Counted(name = "addSystem",
              absolute = true,
@@ -160,7 +158,6 @@ public class SystemResource {
     @Path("/{hostname}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @RolesAllowed({ "admin", "user" })
     // tag::metricsUpdateSystem[]
     @Counted(name = "updateSystem",
@@ -221,7 +218,6 @@ public class SystemResource {
     @DELETE
     @Path("/{hostname}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @RolesAllowed({ "admin" })
     // tag::metricsRemoveSystem[]
     @Counted(name = "removeSystem",
@@ -260,7 +256,6 @@ public class SystemResource {
     @Path("/client/{hostname}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @RolesAllowed({ "admin" })
     // tag::metricsAddSystemClient[]
     @Counted(name = "addSystemClient",
