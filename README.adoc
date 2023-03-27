@@ -1517,7 +1517,12 @@ list that the `podman ps` command displays. Instead, your container appear with 
 
 Now, you can access the application by the http://localhost:9080/inventory/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9080/openapi/ui/.
 
+When you’re finished trying out the application, run the following command to stop the container:
 
+[role='command']
+```
+podman stop inventory
+```
 
 == Support Licensing
 
@@ -1549,8 +1554,8 @@ Rebuild and restart the `inventory` service by dev mode:
 
 [role="no_copy"]
 ----
-mvn clean
-mvn liberty:dev
+./gradlew clean
+./gradlew libertyDev
 ----
 
 In the `Containerfile`, replace the Liberty image at the `FROM` statement with `websphere-liberty` as shown in the following example:
