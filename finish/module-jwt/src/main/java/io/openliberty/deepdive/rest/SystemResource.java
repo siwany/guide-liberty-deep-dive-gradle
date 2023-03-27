@@ -33,7 +33,6 @@ import io.openliberty.deepdive.rest.model.SystemData;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -102,7 +101,6 @@ public class SystemResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @APIResponses(value = {
         @APIResponse(responseCode = "200",
             description = "Successfully added system to inventory"),
@@ -158,7 +156,6 @@ public class SystemResource {
     // end::putEndpoint[]
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     // tag::putRolesAllowed[]
     @RolesAllowed({ "admin", "user" })
     // end::putRolesAllowed[]
@@ -220,7 +217,6 @@ public class SystemResource {
     @Path("/{hostname}")
     // end::deleteEndpoint[]
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     // tag::deleteRolesAllowed[]
     @RolesAllowed({ "admin" })
     // end::deleteRolesAllowed[]
@@ -258,7 +254,6 @@ public class SystemResource {
     // end::addSystemClient[]
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @RolesAllowed({ "admin" })
     @APIResponses(value = {
         @APIResponse(responseCode = "200",

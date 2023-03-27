@@ -11,62 +11,23 @@
 // end::copyright[]
 package io.openliberty.deepdive.rest.model;
 
-import java.io.Serializable;
-
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-
+//tag:: SystemDataSchema[]
 @Schema(name = "SystemData",
         description = "POJO that represents a single inventory entry.")
-// tag::Entity[]
-@Entity
-// end::Entity[]
-// tag::Table[]
-@Table(name = "SystemData")
-// end::Table[]
-// tag::NamedQuery[]
-@NamedQuery(name = "SystemData.findAll", query = "SELECT e FROM SystemData e")
-@NamedQuery(name = "SystemData.findSystem",
-    query = "SELECT e FROM SystemData e WHERE e.hostname = :hostname")
-// end::NamedQuery[]
-// tag::SystemData[]
-public class SystemData implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class SystemData {
+//end:: SystemDataSchema[]
 
-    // tag::GeneratedValue[]
-    @SequenceGenerator(name = "SEQ",
-                       sequenceName = "systemData_id_seq",
-                       allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SEQ")
-    // end::GeneratedValue[]
-    // tag::Id[]
-    @Id
-    // end::Id[]
-    // tag::Column[]
-    @Column(name = "id")
-    // end::Column[]
     private int id;
 
+    //tag:: hostnameSchema[]
     @Schema(required = true)
-    // tag::Column[]
-    @Column(name = "hostname")
-    // end::Column[]
     private String hostname;
+    //end:: hostnameSchema[]
 
-    @Column(name = "osName")
     private String osName;
-    @Column(name = "javaVersion")
     private String javaVersion;
-    @Column(name = "heapSize")
-    private Long heapSize;
+    private Long   heapSize;
 
     public SystemData() {
     }
@@ -119,16 +80,10 @@ public class SystemData implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return hostname.hashCode();
-    }
-
-    @Override
     public boolean equals(Object host) {
-        if (host instanceof SystemData) {
-            return hostname.equals(((SystemData) host).getHostname());
-        }
-        return false;
+      if (host instanceof SystemData) {
+        return hostname.equals(((SystemData) host).getHostname());
+      }
+      return false;
     }
 }
-// end::SystemData[]
