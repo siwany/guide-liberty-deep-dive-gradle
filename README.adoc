@@ -1524,6 +1524,9 @@ When you’re finished trying out the application, run the following command to 
 podman stop inventory
 ```
 
+To learn how to optimize the image size, check out the https://openliberty.io/guides/containerize-podman.html#optimizing-the-image-size[Containerizing microservices with Podman^] guide.
+
+
 == Support Licensing
 
 Open Liberty is open source under the Eclipse Public License v1 so there is no fee to use it in production. Community support is available at StackOverflow, Gitter, or the mail list, and bugs can be raised in https://github.com/openliberty/open-liberty[GitHub^]. Commercial support is available for Open Liberty from IBM. For more information, see the https://www.ibm.com/uk-en/marketplace/elite-support-for-open-liberty[IBM Marketplace^]. The WebSphere Liberty product is built on Open Liberty. No migration is required to use WebSphere Liberty, you simply point to WebSphere Liberty in your build. WebSphere Liberty users get support for the packaged Open Liberty function.
