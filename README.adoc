@@ -1508,14 +1508,14 @@ Make sure that your container is running and show `Up` as their status:
 
 [role="no_copy"]
 ----
-CONTAINER ID    IMAGE                                              COMMAND                CREATED             STATUS          PORTS                                        NAMES
+CONTAINER ID    IMAGE                                              COMMAND                CREATED          STATUS          PORTS                                        NAMES
 2b584282e0f5    localhost/liberty-deepdive-inventory:1.0-SNAPSHOT  /opt/ol/wlp/bin/s...   8 seconds ago    Up 8 second     0.0.0.0:9080->9080/tcp   inventory
 ----
 
 If a problem occurs and your container exit prematurely, the container don't appear in the container
 list that the `podman ps` command displays. Instead, your container appear with an `Exited` status when you run the `podman ps -a` command. Run the `podman logs inventory` command to view the container logs for any potential problems. Run the `podman stats inventory` command to display a live stream of usage statistics for your container. You can also double-check that your `Containerfile` file is correct. When you find the cause of the issues, remove the faulty container with the `podman rm inventory` command. Rebuild your image, and start the container again.
 
-Now, you can access the application by the http://localhost:9081/trial/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9081/openapi/ui/.
+Now, you can access the application by the http://localhost:9080/inventory/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9080/openapi/ui/.
 
 
 
