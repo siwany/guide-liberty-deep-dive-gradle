@@ -1497,89 +1497,27 @@ The following table describes the flags in this command:
 | -p     | Maps the host ports to the container ports. For example: `-p <HOST_PORT>:<CONTAINER_PORT>`
 |===
 
-Next, run the `podman ps` command to verify that your containers are started:
+Next, run the `podman ps` command to verify that your container is started:
 
 [role='command']
 ```
 podman ps
 ```
 
-Make sure that your containers are running and show `Up` as their status:
+Make sure that your container is running and show `Up` as their status:
 
 [role="no_copy"]
 ----
-CONTAINER ID    IMAGE                             COMMAND                CREATED          STATUS          PORTS                                        NAMES
-2b584282e0f5    localhost/inventory:1.0-SNAPSHOT  /opt/ol/wlp/bin/s...   2 seconds ago    Up 1 second     9080/tcp, 9443/tcp, 0.0.0.0:9081->9081/tcp   inventory
-99a98313705f    localhost/system:1.0-SNAPSHOT     /opt/ol/wlp/bin/s...   3 seconds ago    Up 2 seconds    0.0.0.0:9080->9080/tcp, 9443/tcp             system
+CONTAINER ID    IMAGE                                              COMMAND                CREATED             STATUS          PORTS                                        NAMES
+2b584282e0f5    localhost/liberty-deepdive-inventory:1.0-SNAPSHOT  /opt/ol/wlp/bin/s...   8 seconds ago    Up 8 second     0.0.0.0:9080->9080/tcp   inventory
 ----
 
-If a problem occurs and your containers exit prematurely, the containers don't appear in the container
-list that the `podman ps` command displays. 
-Instead, your containers appear with an `Exited` status when you run the `podman ps -a` command.
-Run the `podman logs system` and `podman logs inventory` commands to view the container logs for any potential problems. 
-Run the `podman stats system` and `podman stats inventory` commands to display a live stream of usage statistics for your containers. 
-You can also double-check that your `Containerfile` files are correct. 
-When you find the cause of the issues, remove the faulty containers with the `podman rm system` and `podman rm inventory` commands. 
-Rebuild your images, and start the containers again.
+If a problem occurs and your container exit prematurely, the container don't appear in the container
+list that the `podman ps` command displays. Instead, your container appear with an `Exited` status when you run the `podman ps -a` command. Run the `podman logs inventory` command to view the container logs for any potential problems. Run the `podman stats inventory` command to display a live stream of usage statistics for your container. You can also double-check that your `Containerfile` file is correct. When you find the cause of the issues, remove the faulty container with the `podman rm inventory` command. Rebuild your image, and start the container again.
 
-// static guide instructions:
-ifndef::cloud-hosted[]
-To access the application, go to the http://localhost:9081/inventory/systems[http://localhost:9081/inventory/systems^] URL. 
-An empty list is expected because no system properties are stored in the inventory yet. 
-endif::[]
+Now, you can access the application by the http://localhost:9081/trial/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9081/openapi/ui/.
 
-// cloud-hosted guide instructions:
-ifdef::cloud-hosted[]
-To access the application, run the following curl command. 
-An empty list is expected because no system properties are stored in the inventory yet:
-```
-curl -s http://localhost:9081/inventory/systems | jq
-```
-{: codeblock}
-endif::[]
 
-Next, retrieve the `system` container's IP address by running the following:
-
-[role='command']
-```
-podman inspect -f "{{.NetworkSettings.IPAddress }}" system
-```
-
-The command returns the system container IP address:
-
-[role="no_copy"]
-----
-10.88.0.2
-----
-
-In this case, the IP address for the `system` service is `10.88.0.2`.
-Take note of this IP address to construct the URL to view the system properties.
-
-// static guide instructions:
-ifndef::cloud-hosted[]
-Go to the `\http://localhost:9081/inventory/systems/pass:c[[system-ip-address]]` URL by replacing `[system-ip-address]` with the IP address that you obtained earlier.
-You see a result in JSON format with the system properties of your local JVM. When you go to this URL, these system
-properties are automatically stored in the inventory. Go back to the http://localhost:9081/inventory/systems[http://localhost:9081/inventory/systems^] URL and
-you see a new entry for `[system-ip-address]`. 
-endif::[]
-
-// cloud-hosted guide instructions:
-ifdef::cloud-hosted[]
-Run the following commands to go to the **http://localhost:9081/inventory/systems/[system-ip-address]** by replacing **[system-ip-address]** URL with the IP address that you obtained earlier:
-```
-SYSTEM_IP=`podman inspect -f "{{.NetworkSettings.IPAddress }}" system`
-curl -s http://localhost:9081/inventory/systems/{$SYSTEM_IP} | jq
-```
-{: codeblock}
-
-You see a result in JSON format with the system properties of your local JVM. When you visit this URL, these system
-properties are automatically stored in the inventory. Run the following curl command and 
-you see a new entry for **[system-ip-address]**:
-```
-curl -s http://localhost:9081/inventory/systems | jq
-```
-{: codeblock}
-endif::[]
 
 == Support Licensing
 
