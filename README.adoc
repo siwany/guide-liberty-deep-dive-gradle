@@ -1517,11 +1517,12 @@ list that the `podman ps` command displays. Instead, your container appear with 
 
 Now, you can access the application by the http://localhost:9080/inventory/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9080/openapi/ui/.
 
-When you’re finished trying out the application, run the following command to stop the container:
+When you’re finished trying out the application, run the following commands to stop the container:
 
 [role='command']
 ```
 podman stop inventory
+podman rm inventory
 ```
 
 To learn how to optimize the image size, check out the https://openliberty.io/guides/containerize-podman.html#optimizing-the-image-size[Containerizing microservices with Podman^] guide.
