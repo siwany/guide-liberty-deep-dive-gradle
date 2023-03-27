@@ -1536,22 +1536,13 @@ WebSphere Liberty is also available in https://search.maven.org/search?q=g:com.i
 
 You can use WebSphere Liberty for development even without purchasing it. However, if you have production entitlement, you can easily change to use it with the following steps.
 
-In the `build.gradle`, add the `<configuration>` element as the following:
+In the `build.gradle`, add the `liberty` element as the following:
 
-```XML
-  <plugin>
-      <groupId>io.openliberty.tools</groupId>
-      <artifactId>liberty-maven-plugin</artifactId>
-      <version>3.7.1</version>
-      <configuration>
-          <runtimeArtifact>
-              <groupId>com.ibm.websphere.appserver.runtime</groupId>
-              <artifactId>wlp-kernel</artifactId>
-               <version>[22.0.0.13,)</version>
-               <type>zip</type>
-          </runtimeArtifact>
-      </configuration>
-  </plugin>
+```
+liberty {
+    runtime = [ 'group':'com.ibm.websphere.appserver.runtime',
+                'name':'wlp-kernel']
+}
 ```
 
 Rebuild and restart the `inventory` service by dev mode:
