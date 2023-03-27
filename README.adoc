@@ -1042,27 +1042,27 @@ cp /home/project/guide-liberty-deep-dive/finish/system/src/main/liberty/config/r
 ```
 endif::[]
 
-Now configure the client https port in the `pom.xml` configuration file.
+Now configure the client https port in the `build.gradle` configuration file.
 
 [role="code_command hotspot file=2", subs="quotes"]
 ----
-#Replace the `pom.xml` file.#
-`pom.xml`
+#Replace the `build.gradle` file.#
+`build.gradle`
 ----
 
 // File 2
-pom.xml
-[source, xml, linenums, role='code_column hide_tags=copyright']
+build.gradle
+[source, gradle, linenums, role='code_column']
 ----
-include::finish/module-jwt/pom.xml[]
+include::finish/module-jwt/build.gradle[]
 ----
 
-Configure the client https port by setting the [hotspot=https file=2]`<liberty.var.client.https.port>` to `9444`.
+Configure the client https port by setting the [hotspot=https file=2]`liberty.server.var.'client.https.port'` to `9444`.
 
 In your dev mode console for the `inventory` microservice, press `CTRL+C` to stop the server. Then, restart the dev mode of the `inventory` microservice.
 [role='command']
 ```
-mvn liberty:dev
+./gradlew libertyDev
 ```
 
 After you see the following message, your application server in dev mode is ready again:
