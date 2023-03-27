@@ -1429,7 +1429,7 @@ The [hotspot=from file=0]`FROM` instruction initializes a new build stage and in
 
 To help you manage your images, you can label your container images with the [hotspot=label file=0]`LABEL` command. 
 
-The [hotspot=copy file=0]`COPY` instructions are structured as `COPY` `[--chown=<user>:<group>]` `<source>` `<destination>`. They copy local files into the specified destination within your container  image. In this case, the first [hotspot=copy-config file=0]`COPY` instruction copies the server configuration file that is at `src/main/liberty/config/server.xml` to the `/config/` destination directory. Similarly, the second [hotspot=copy-war file=0]`COPY` instruction copies the `.war` file to the `/config/apps` destination directory. The third [hotspot=copy-postgres file=0]`COPY` instruction copies the PostgreSQL library file to the Liberty shared resources directory.
+The [hotspot=copy file=0]`COPY` instructions are structured as `COPY` `[--chown=<user>:<group>]` `<source>` `<destination>`. They copy local files into the specified destination within your container  image. In this case, the first [hotspot=copy-config file=0]`COPY` instruction copies the server configuration file that is at `src/main/liberty/config/server.xml` to the `/config/` destination directory. Similarly, the second [hotspot=copy-war file=0]`COPY` instruction copies the `.war` file to the `/config/apps` destination directory.
 
 
 
@@ -1472,12 +1472,114 @@ podman images
 Verify that the `liberty-deepdive-inventory:1.0-SNAPSHOT` image is listed among the container images, for example:
 [source, role="no_copy"]
 ----
-REPOSITORY                    TAG
-liberty-deepdive-inventory    1.0-SNAPSHOT
-icr.io/appcafe/open-liberty   full-java11-openj9-ubi
+REPOSITORY                             TAG
+localhost/liberty-deepdive-inventory   1.0-SNAPSHOT
+icr.io/appcafe/open-liberty            full-java11-openj9-ubi
 ----
 
 
+=== Running the application in container
+
+Now that the `inventory` container image is built, you will run the application in container:
+
+[role='command']
+```
+podman run -d --name inventory -p 9080:9080 liberty-deepdive-inventory:1.0-SNAPSHOT
+```
+
+The following table describes the flags in this command: 
+
+[cols="15, 100", options="header"]
+|===
+| *Flag* | *Description*
+| -d     | Runs the container in the background.
+| --name | Specifies a name for the container.
+| -p     | Maps the host ports to the container ports. For example: `-p <HOST_PORT>:<CONTAINER_PORT>`
+|===
+
+Next, run the `podman ps` command to verify that your containers are started:
+
+[role='command']
+```
+podman ps
+```
+
+Make sure that your containers are running and show `Up` as their status:
+
+[role="no_copy"]
+----
+CONTAINER ID    IMAGE                             COMMAND                CREATED          STATUS          PORTS                                        NAMES
+2b584282e0f5    localhost/inventory:1.0-SNAPSHOT  /opt/ol/wlp/bin/s...   2 seconds ago    Up 1 second     9080/tcp, 9443/tcp, 0.0.0.0:9081->9081/tcp   inventory
+99a98313705f    localhost/system:1.0-SNAPSHOT     /opt/ol/wlp/bin/s...   3 seconds ago    Up 2 seconds    0.0.0.0:9080->9080/tcp, 9443/tcp             system
+----
+
+If a problem occurs and your containers exit prematurely, the containers don't appear in the container
+list that the `podman ps` command displays. 
+Instead, your containers appear with an `Exited` status when you run the `podman ps -a` command.
+Run the `podman logs system` and `podman logs inventory` commands to view the container logs for any potential problems. 
+Run the `podman stats system` and `podman stats inventory` commands to display a live stream of usage statistics for your containers. 
+You can also double-check that your `Containerfile` files are correct. 
+When you find the cause of the issues, remove the faulty containers with the `podman rm system` and `podman rm inventory` commands. 
+Rebuild your images, and start the containers again.
+
+// static guide instructions:
+ifndef::cloud-hosted[]
+To access the application, go to the http://localhost:9081/inventory/systems[http://localhost:9081/inventory/systems^] URL. 
+An empty list is expected because no system properties are stored in the inventory yet. 
+endif::[]
+
+// cloud-hosted guide instructions:
+ifdef::cloud-hosted[]
+To access the application, run the following curl command. 
+An empty list is expected because no system properties are stored in the inventory yet:
+```
+curl -s http://localhost:9081/inventory/systems | jq
+```
+{: codeblock}
+endif::[]
+
+Next, retrieve the `system` container's IP address by running the following:
+
+[role='command']
+```
+podman inspect -f "{{.NetworkSettings.IPAddress }}" system
+```
+
+The command returns the system container IP address:
+
+[role="no_copy"]
+----
+10.88.0.2
+----
+
+In this case, the IP address for the `system` service is `10.88.0.2`.
+Take note of this IP address to construct the URL to view the system properties.
+
+// static guide instructions:
+ifndef::cloud-hosted[]
+Go to the `\http://localhost:9081/inventory/systems/pass:c[[system-ip-address]]` URL by replacing `[system-ip-address]` with the IP address that you obtained earlier.
+You see a result in JSON format with the system properties of your local JVM. When you go to this URL, these system
+properties are automatically stored in the inventory. Go back to the http://localhost:9081/inventory/systems[http://localhost:9081/inventory/systems^] URL and
+you see a new entry for `[system-ip-address]`. 
+endif::[]
+
+// cloud-hosted guide instructions:
+ifdef::cloud-hosted[]
+Run the following commands to go to the **http://localhost:9081/inventory/systems/[system-ip-address]** by replacing **[system-ip-address]** URL with the IP address that you obtained earlier:
+```
+SYSTEM_IP=`podman inspect -f "{{.NetworkSettings.IPAddress }}" system`
+curl -s http://localhost:9081/inventory/systems/{$SYSTEM_IP} | jq
+```
+{: codeblock}
+
+You see a result in JSON format with the system properties of your local JVM. When you visit this URL, these system
+properties are automatically stored in the inventory. Run the following curl command and 
+you see a new entry for **[system-ip-address]**:
+```
+curl -s http://localhost:9081/inventory/systems | jq
+```
+{: codeblock}
+endif::[]
 
 == Support Licensing
 
