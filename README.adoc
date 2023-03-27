@@ -1538,12 +1538,13 @@ You can use WebSphere Liberty for development even without purchasing it. Howeve
 
 In the `build.gradle`, add the `liberty` element as the following:
 
-```
+[role="no_copy"]
+----
 liberty {
     runtime = [ 'group':'com.ibm.websphere.appserver.runtime',
                 'name':'wlp-kernel']
 }
-```
+----
 
 Rebuild and restart the `inventory` service by dev mode:
 
