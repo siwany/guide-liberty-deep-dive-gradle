@@ -1,10 +1,10 @@
 @echo off
 
-if exist .\finish\system\target\liberty\wlp\bin (
-    call .\finish\system\target\liberty\wlp\bin\server.bat status | findStr /c:"is running" && exit /B 0
+if exist .\finish\system\build\wlp\bin (
+    call .\finish\system\build\wlp\bin\server.bat status | findStr /c:"is running" && exit /B 0
 ) 
 
 cd .\finish\system || exit
-call mvn clean package liberty:create liberty:install-feature liberty:deploy
-call mvn liberty:start
+call gradlew clean war libertyCreate installFeature deploy
+call gradlew libertyStart
 cd ..\..\

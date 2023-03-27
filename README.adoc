@@ -1,4 +1,4 @@
-// Copyright (c) 2022, 2023 IBM Corporation and others.
+// Copyright (c) 2023 IBM Corporation and others.
 // Licensed under Creative Commons Attribution-NoDerivatives
 // 4.0 International (CC BY-ND 4.0)
 //   https://creativecommons.org/licenses/by-nd/4.0/
@@ -6,10 +6,10 @@
 // Contributors:
 //     IBM Corporation
 //
-:projectid: liberty-deep-dive
+:projectid: liberty-deep-dive-gradle
 :page-layout: guide-multipane
 :page-duration: 120 minutes
-:page-releasedate: 2022-04-27
+:page-releasedate: 2023-04-10
 :page-essential: false
 :page-description: Learn how to use Liberty to develop and run Java microservices.
 :page-tags: ['Jakarta EE', 'MicroProfile']
@@ -1393,7 +1393,7 @@ endif::[]
 
 == Building the container 
 
-Press `CTRL+C` in the command-line session to stop the `mvn liberty:dev` dev mode that you started in the previous section.
+Press `CTRL+C` in the command-line session to stop the `gradlew libertyDev` dev mode that you started in the previous section.
 
 Navigate to your application directory:
 
@@ -1525,7 +1525,7 @@ podman stop inventory
 podman rm inventory
 ```
 
-To learn how to optimize the image size, check out the https://openliberty.io/guides/containerize-podman.html#optimizing-the-image-size[Containerizing microservices with Podman^] guide.
+To learn how to optimize the image size, check out the https://openliberty.io/guides/containerize-podman.html#optimizing-the-image-size[Containerizing microservices with Podman guide^].
 
 
 == Support Licensing

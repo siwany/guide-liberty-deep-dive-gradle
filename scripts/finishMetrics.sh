@@ -5,6 +5,7 @@ if [[ -e ./start/inventory ]]; then
 fi
 
 mkdir ./start/inventory
+cp -fr ./finish/module-starter/* ./start/inventory
 cp -fr ./finish/module-jwt/* ./start/inventory
 mkdir -p ./start/inventory/src/main/liberty/config/resources/security
 cp ./finish/system/src/main/liberty/config/resources/security/key.p12 ./start/inventory/src/main/liberty/config/resources/security/key.p12
@@ -14,8 +15,7 @@ cp ./finish/module-metrics/src/main/liberty/config/server.xml ./start/inventory/
 cp ./finish/module-metrics/src/main/java/io/openliberty/deepdive/rest/SystemResource.java ./start/inventory/src/main/java/io/openliberty/deepdive/rest
 
 ./scripts/startSystem.sh
-./scripts/startPostgres.sh
 
 echo Now, you may run following commands to continue the tutorial:
 echo cd start/inventory
-echo mvn liberty:dev -DserverStartTimeout=120
+echo ./gradlew libertyDev
