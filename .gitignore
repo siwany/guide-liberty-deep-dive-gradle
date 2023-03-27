@@ -1,5 +1,6 @@
-# Maven generated
-target
+# Gradle generated
+build
+.gradle
 
 # Eclipse generated
 bin
