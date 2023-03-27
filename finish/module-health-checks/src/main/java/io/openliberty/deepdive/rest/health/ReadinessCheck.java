@@ -32,27 +32,25 @@ import java.net.Socket;
 // end::ApplicationScoped[]
 public class ReadinessCheck implements HealthCheck {
 
-    @Inject
-    @ConfigProperty(name = "postgres/hostname")
-    private String host;
-
-    @Inject
-    @ConfigProperty(name = "postgres/portnum")
-    private int port;
+    private static final int ALIVE_DELAY_SECONDS = 10;
+    private static final String READINESS_CHECK = "Readiness Check";
+    private static LocalDateTime aliveAfter = LocalDateTime.now();
 
     @Override
     public HealthCheckResponse call() {
-        HealthCheckResponseBuilder responseBuilder =
-            HealthCheckResponse.named("Readiness Check");
-
-        try {
-            Socket socket = new Socket(host, port);
-            socket.close();
-            responseBuilder.up();
-        } catch (Exception e) {
-            responseBuilder.down();
+        if (isAlive()) {
+            return HealthCheckResponse.up(READINESS_CHECK);
         }
-        return responseBuilder.build();
+
+        return HealthCheckResponse.down(READINESS_CHECK);
+    }
+
+    public static void setUnhealthy() {
+        aliveAfter = LocalDateTime.now().plusSeconds(ALIVE_DELAY_SECONDS);
+    }
+
+    private static boolean isAlive() {
+        return LocalDateTime.now().isAfter(aliveAfter);
     }
 }
 // end::ReadinessCheck[]
