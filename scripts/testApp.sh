@@ -3,11 +3,15 @@ set -euxo pipefail
 
 
 echo ===== Test module-getting-started =====
-cd module-getting-started || exit
+cd ..
+./scripts/finishGettingStarted.sh
+cd start/inventory
 
-gradle clean war libertyCreate installFeature deploy
+./gradlew clean war libertyCreate installFeature deploy
+./gradlew libertyStart
 
-gradle libertyStart
+sleep 5
+
 curl -s http://localhost:9080/inventory/api/systems | grep "\\[\\]" || exit 1
 
 curl -s http://localhost:9080/inventory/api/systems | grep "\\[\\]" || exit 1
@@ -38,14 +42,19 @@ curl -X DELETE http://localhost:9080/inventory/api/systems/localhost | grep remo
 
 curl -X POST http://localhost:9080/inventory/api/systems/client/localhost | grep "not implemented" || exit 1
 
-gradle libertyStop
+./gradlew libertyStop
+
+cd ../..
 
 echo ===== Test module-openapi =====
-cd ../module-openapi || exit
-gradle clean war libertyCreate installFeature deploy
 
+./scripts/finishOpenAPI.sh
+cd start/inventory
 
-gradle libertyStart
+./gradlew clean war libertyCreate installFeature deploy
+./gradlew libertyStart
+
+sleep 5
 
 curl -s http://localhost:9080/inventory/api/systems | grep "\\[\\]" || exit 1
 
@@ -77,7 +86,9 @@ curl -X DELETE http://localhost:9080/inventory/api/systems/localhost | grep remo
 
 curl -X POST http://localhost:9080/inventory/api/systems/client/localhost | grep "not implemented" || exit 1
 
-gradle libertyStop
+./gradlew libertyStop
+
+cd ../..
 
 echo ===== Test module-config =====
 cd ../module-config || exit
