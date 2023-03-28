@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-
 echo ===== Test module-getting-started =====
 cd ..
 ./scripts/finishGettingStarted.sh
@@ -91,10 +90,14 @@ curl -X POST http://localhost:9080/inventory/api/systems/client/localhost | grep
 cd ../..
 
 echo ===== Test module-config =====
-cd ../module-config || exit
-gradle clean war libertyCreate installFeature deploy
 
-gradle libertyStart
+./scripts/finishConfig.sh
+cd start/inventory
+
+./gradlew clean war libertyCreate installFeature deploy
+./gradlew libertyStart
+
+sleep 5
 
 curl -s http://localhost:9080/inventory/api/systems | grep "\\[\\]" || exit 1
 
@@ -126,37 +129,24 @@ curl -X DELETE http://localhost:9080/inventory/api/systems/localhost | grep remo
 
 curl -X POST http://localhost:9080/inventory/api/systems/client/localhost | grep "5555" || exit 1
 
-gradle libertyStop
+./gradlew libertyStop
 
-echo ===== Test module-jwt =====
+cd ../..
 
-cd ../system || exit
-gradle clean war libertyCreate installFeature deploy
-gradle libertyStart
+echo ===== Test module-jwt, health, metrics =====
 
-cd ../module-jwt || exit
+./scripts/startSystem.sh
 
-if [[ -e ./src/main/java/io/openliberty/deepdive/rest/health ]]; then
-    rm -fr ./src/main/java/io/openliberty/deepdive/rest/health
-fi
+./scripts/finishMetrics.sh
+cd start/inventory
 
-cp -f ../system/src/main/liberty/config/resources/security/key.p12 ./src/main/liberty/config/resources/security/key.p12
-mkdir -p ./src/main/java/io/openliberty/deepdive/rest/health
-cp ../module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/StartupCheck.java ./src/main/java/io/openliberty/deepdive/rest/health
-cp ../module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/LivenessCheck.java ./src/main/java/io/openliberty/deepdive/rest/health
-cp ../module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/ReadinessCheck.java ./src/main/java/io/openliberty/deepdive/rest/health
-cp ../module-metrics/src/main/liberty/config/server.xml ./src/main/liberty/config/server.xml
-cp ../module-metrics/src/main/java/io/openliberty/deepdive/rest/SystemResource.java ./src/main/java/io/openliberty/deepdive/rest/SystemResource.java
+./gradlew clean war libertyCreate installFeature deploy
+./gradlew libertyStart
 
-gradle clean war libertyCreate installFeature deploy
+sleep 10
 
-gradle libertyStart
-
-sleep 20
 
 echo ===== Test module-health-checks =====
-
-cd ../module-jwt || exit
 
 curl http://localhost:9080/health/started | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/live | grep "\"status\":" || exit 1
@@ -182,31 +172,29 @@ curl -k --user bob:bobpwd https://localhost:9443/metrics/application | grep 'app
 
 echo ===== Stop all processes
 
-gradle libertyStop
+./gradlew libertyStop
 
-cd ../system
-gradle libertyStop
+cd ../..
+
+./scripts/stopSystem.sh
 
 
-echo ===== Test module-testcontainers =====
+echo ===== Test module-containerize =====
 
-cd ../module-jwt
+./scripts/finishContainer.sh
+cd start/inventory
 
-cp ../module-kubernetes/Containerfile .
-podman pull -q icr.io/appcafe/open-liberty:full-java11-openj9-ubi 
-
-gradle war
-podman build -t liberty-deepdive-inventory:1.0-SNAPSHOT .
 podman images
 podman run -d --name inventory -p 9080:9080 liberty-deepdive-inventory:1.0-SNAPSHOT
 podman ps 
-sleep 10
+sleep 20
+
 curl http://localhost:9080/health/started | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/live | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/ready | grep "\"status\":\"UP\"" || exit 1
+
 podman stop inventory
 podman rm inventory
-
 
 echo ===== TESTS PASSED =====
 exit 0

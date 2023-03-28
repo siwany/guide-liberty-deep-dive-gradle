@@ -56,12 +56,12 @@ cd /home/project
 ```
 endif::[]
 
-Clone the https://github.com/OpenLiberty/guide-liberty-deep-dive.git[Git repository^]:
+Clone the https://github.com/OpenLiberty/guide-liberty-deep-dive-gradle.git[Git repository^]:
 
 [role='command']
 ```
-git clone https://github.com/openliberty/guide-liberty-deep-dive.git
-cd guide-liberty-deep-dive
+git clone https://github.com/openliberty/guide-liberty-deep-dive-gradle.git
+cd guide-liberty-deep-dive-gradle
 ```
 
 The `start` directory is an empty directory where you will build the `inventory` service.
@@ -111,17 +111,17 @@ endif::[]
 ifdef::cloud-hosted[]
 In this Skills Network environment, instead of manually downloading and extracting the project, run the following commands:
 ```bash
-cd /home/project/guide-liberty-deep-dive/start
+cd /home/project/guide-liberty-deep-dive-gradle/start
 curl -o inventory.zip 'https://start.openliberty.io/api/start?a=inventory&b=maven&e=9.1&g=io.openliberty.deepdive&j=11&m=5.0'
 unzip inventory.zip -d inventory
 ```
 
-After getting the ***inventory*** project, switch the workspace to the ***/home/project/guide-liberty-deep-dive/start/inventory*** directory.
+After getting the ***inventory*** project, switch the workspace to the ***/home/project/guide-liberty-deep-dive-gradle/start/inventory*** directory.
 > - Select **File** > **Close Workspace** from the menu of the IDE.
 >   - Click the OK button to confirm to close.
 >   - Wait for the IDE to refresh.
 > - Select **File** > **Open Workspace...** from the menu of the IDE.
->   - In the **Open Workspace** window, select the ***/home/project/guide-liberty-deep-dive/start/inventory*** directory and click the **Open** button.
+>   - In the **Open Workspace** window, select the ***/home/project/guide-liberty-deep-dive-gradle/start/inventory*** directory and click the **Open** button.
 >   - Wait for the IDE to refresh.
 endif::[]
 
@@ -156,7 +156,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -227,7 +227,7 @@ Now that a basic Liberty application is running, the next step is to create the 
 ifdef::cloud-hosted[]
 Open another command-line session by selecting **Terminal** > **New Terminal** from the menu of the IDE. Go to the ***start/inventory*** directory.
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -275,7 +275,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-mkdir /home/project/guide-liberty-deep-dive/start/inventory/src/main/java/io/openliberty/deepdive/rest/model
+mkdir /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/java/io/openliberty/deepdive/rest/model
 ```
 endif::[]
 
@@ -624,7 +624,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-mkdir -p /home/project/guide-liberty-deep-dive/start/inventory/src/main/resources/META-INF
+mkdir -p /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/resources/META-INF
 ```
 endif::[]
 
@@ -667,7 +667,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -858,7 +858,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-mkdir /home/project/guide-liberty-deep-dive/start/inventory/src/main/java/io/openliberty/deepdive/rest/client
+mkdir /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/java/io/openliberty/deepdive/rest/client
 ```
 endif::[]
 
@@ -990,9 +990,9 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-mkdir -p /home/project/guide-liberty-deep-dive/start/inventory/src/main/liberty/config/resources/security
-cp /home/project/guide-liberty-deep-dive/finish/system/src/main/liberty/config/resources/security/key.p12 \
-   /home/project/guide-liberty-deep-dive/start/inventory/src/main/liberty/config/resources/security/key.p12
+mkdir -p /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/liberty/config/resources/security
+cp /home/project/guide-liberty-deep-dive-gradle/finish/system/src/main/liberty/config/resources/security/key.p12 \
+   /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/liberty/config/resources/security/key.p12
 ```
 endif::[]
 
@@ -1041,7 +1041,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/finish/system
+cd /home/project/guide-liberty-deep-dive-gradle/finish/system
 mvn liberty:run
 ```
 endif::[]
@@ -1126,7 +1126,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -1169,7 +1169,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-mkdir /home/project/guide-liberty-deep-dive/start/inventory/src/main/java/io/openliberty/deepdive/rest/health
+mkdir /home/project/guide-liberty-deep-dive-gradle/start/inventory/src/main/java/io/openliberty/deepdive/rest/health
 ```
 endif::[]
 
@@ -1253,7 +1253,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -1405,7 +1405,7 @@ endif::[]
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 
@@ -1439,7 +1439,7 @@ Run the `war` task from the `start/inventory` directory so that the `.war` file 
 
 ifdef::cloud-hosted[]
 ```bash
-cd /home/project/guide-liberty-deep-dive/start/inventory
+cd /home/project/guide-liberty-deep-dive-gradle/start/inventory
 ```
 endif::[]
 

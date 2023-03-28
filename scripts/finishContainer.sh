@@ -16,6 +16,7 @@ cp ./finish/module-kubernetes/Containerfile ./start/inventory
 
 cd ./start/inventory || exit
 ./gradlew clean war libertyCreate installFeature deploy
+podman pull -q icr.io/appcafe/open-liberty:full-java11-openj9-ubi 
 podman build -t liberty-deepdive-inventory:1.0-SNAPSHOT .
 cd ../../
 
