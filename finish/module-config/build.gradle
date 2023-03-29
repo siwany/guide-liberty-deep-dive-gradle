@@ -24,10 +24,13 @@ dependencies {
     providedCompile 'org.eclipse.microprofile:microprofile:5.0'
 }
 
+// tag::war[]
 war {
-    archiveName = "${baseName}.${extension}"
+    archiveVersion = ''
 }
+// end::war[]
 
+// tag::ext[]
 ext  {
     // tag::httpPort[]
     liberty.server.var.'default.http.port' = '9080'
@@ -39,5 +42,6 @@ ext  {
     liberty.server.var.'default.context.root' = '/inventory'
     // end::contextRoot[]
 }
+// end::ext[]
 
 clean.dependsOn 'libertyStop'

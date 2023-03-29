@@ -578,7 +578,7 @@ build.gradle
 include::finish/module-config/build.gradle[]
 ----
 
-Add properties for the [hotspot=httpPort file=1]`HTTP` port, [hotspot=httpsPort file=1]`HTTPS` port, and the [hotspot=contextRoot file=1]`context root` to the `build.gradle` file. 
+Set the [hotspot=war file=1]`archiveVersion` property to an empty string for the `war` task and add properties for the [hotspot=httpPort file=1]`HTTP` port, [hotspot=httpsPort file=1]`HTTPS` port, and the [hotspot=contextRoot file=1]`context root` to the [hotspot=ext file=1]`build.gradle` file.
 
 You can try changing the value of these variables in the `build.gradle` file:
 

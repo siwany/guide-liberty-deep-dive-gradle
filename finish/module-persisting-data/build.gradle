@@ -34,7 +34,7 @@ dependencies {
 }
 
 war {
-    archiveName = "${baseName}.${extension}"
+    archiveVersion = ''
 }
 
 ext  {

@@ -187,7 +187,7 @@ cd start/inventory
 podman images
 podman run -d --name inventory -p 9080:9080 liberty-deepdive-inventory:1.0-SNAPSHOT
 podman ps 
-sleep 20
+sleep 30
 
 curl http://localhost:9080/health/started | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/live | grep "\"status\":" || exit 1
