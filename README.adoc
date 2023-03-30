@@ -9,7 +9,7 @@
 :projectid: liberty-deep-dive-gradle
 :page-layout: guide-multipane
 :page-duration: 80 minutes
-:page-releasedate: 2023-04-10
+:page-releasedate: 2023-03-30
 :page-essential: false
 :page-description: Learn how to use Liberty to develop and run Java microservices.
 :page-tags: ['Jakarta EE', 'MicroProfile']
