@@ -362,9 +362,15 @@ SystemResource.java
 include::finish/module-getting-started/src/main/java/io/openliberty/deepdive/rest/SystemResource.java[]
 ----
 
+RestApplication.java
+[source, Java, linenums, role='code_column hide_tags=copyright']
+----
+include::finish/module-getting-started/src/main/java/io/openliberty/deepdive/rest/RestApplication.java[]
+----
+
 In Jakarta RESTful Web Services, a single class like the `SystemResource.java` class must represent a single resource, or a group of resources of the same type. In this application, a resource might be a system property, or a set of system properties. It is efficient to have a single class handle multiple different resources, but keeping a clean separation between types of resources helps with maintainability.
 
-The [hotspot=path file=2]`@Path` annotation on this class indicates that this resource responds to the `/systems` path in the RESTful application. The [hotspot=applicationPath file=2]`@ApplicationPath` annotation in the `RestApplication` class, together with the [hotspot=path file=2]`@Path` annotation in the `SystemResource` class, indicates that this resource is available at the `/api/systems` path.
+The [hotspot=path file=2]`@Path` annotation on this class indicates that this resource responds to the `/systems` path in the RESTful application. The [hotspot=applicationPath file=3]`@ApplicationPath` annotation in the `RestApplication` class, together with the [hotspot=path file=2]`@Path` annotation in the `SystemResource` class, indicates that this resource is available at the `/api/systems` path.
 
 The Jakarta RESTful Web Services API maps the HTTP methods on the URL to the methods of the class by using annotations. This application uses the `GET` annotation to map an HTTP `GET` request to the `/api/systems` path.
 
@@ -776,7 +782,7 @@ Before making requests, you must add a system to the inventory. Try adding a sys
 
 [role='command']
 ----
-curl -X POST 'http://localhost:9080/inventory/api/systems?hostname=localhost&osName=mac&javaVersion=11&heapSize=1'
+curl -X POST "http://localhost:9080/inventory/api/systems?hostname=localhost&osName=mac&javaVersion=11&heapSize=1"
 ----
 
 You can expect the following response:
@@ -791,7 +797,7 @@ This command calls the `/systems` endpoint and adds a system `localhost` to the 
 ifndef::cloud-hosted[]
 [role='command']
 ----
-curl -s 'http://localhost:9080/inventory/api/systems'
+curl -s "http://localhost:9080/inventory/api/systems"
 ----
 endif::[]
 
@@ -812,7 +818,7 @@ Now try calling your secure PUT endpoint to update the system that you just adde
 
 [role='command']
 ----
-curl -k --user alice:alicepwd -X PUT 'http://localhost:9080/inventory/api/systems/localhost?heapSize=2097152&javaVersion=11&osName=linux'
+curl -k --user alice:alicepwd -X PUT "http://localhost:9080/inventory/api/systems/localhost?heapSize=2097152&javaVersion=11&osName=linux"
 ----
 
 As this endpoint is accessible to the groups `user` and `admin`, you must log in with `user` credentials to update the system.
@@ -832,7 +838,7 @@ You can check that your application is secured against these requests with the f
 
 [role='command']
 ----
-curl -k --user alice:alicepwd -X DELETE 'https://localhost:9443/inventory/api/systems/localhost'
+curl -k --user alice:alicepwd -X DELETE "https://localhost:9443/inventory/api/systems/localhost"
 ----
 
 As `alice` is part of the `user` group, this request cannot work. In your dev mode console, you can expect the following output:
@@ -846,7 +852,7 @@ Now attempt to call this endpoint with an authenticated `admin` user that can wo
 
 [role='command']
 ----
-curl -k --user bob:bobpwd -X DELETE 'https://localhost:9443/inventory/api/systems/localhost'
+curl -k --user bob:bobpwd -X DELETE "https://localhost:9443/inventory/api/systems/localhost"
 ----
 
 You can expect to see the following response:
@@ -860,7 +866,7 @@ This response means that your endpoint is secure. Validate that it works correct
 
 [role='command']
 ----
-curl 'http://localhost:9080/inventory/api/systems'
+curl "http://localhost:9080/inventory/api/systems"
 ----
 
 You can expect to see the following output:
@@ -1137,7 +1143,7 @@ As this endpoint is restricted to `admin`, you can use the login credentials for
 
 [role='command']
 ----
-curl -k --user bob:bobpwd -X POST 'https://localhost:9443/inventory/api/systems/client/localhost'
+curl -k --user bob:bobpwd -X POST "https://localhost:9443/inventory/api/systems/client/localhost"
 ----
 
 You can expect the following output:
@@ -1152,7 +1158,7 @@ You can verify that this endpoint works as expected by running the following com
 ifndef::cloud-hosted[]
 [role='command']
 ----
-curl 'http://localhost:9080/inventory/api/systems'
+curl "http://localhost:9080/inventory/api/systems"
 ----
 endif::[]
 
@@ -1183,6 +1189,7 @@ Next, you'll use https://download.eclipse.org/microprofile/microprofile-health-4
 Navigate to your application directory
 
 ifndef::cloud-hosted[]
+[role='command']
 ```
 cd start/inventory
 ```
@@ -1304,6 +1311,7 @@ Next, you can learn how to use https://download.eclipse.org/microprofile/micropr
 Go to your application directory.
 
 ifndef::cloud-hosted[]
+[role='command']
 ```
 cd start/inventory
 ```
@@ -1456,6 +1464,7 @@ Press `CTRL+C` in the command-line session to stop the `gradlew libertyDev` dev 
 Navigate to your application directory:
 
 ifndef::cloud-hosted[]
+[role='command']
 ```
 cd start/inventory
 ```
@@ -1473,7 +1482,7 @@ Make sure to start your podman daemon before you proceed.
 
 [role="code_command hotspot file=0",subs="quotes"]
 ----
-#Replace the `Containerfile` in the `start/inventory` directory.#
+#Create the `Containerfile` in the `start/inventory` directory.#
 `Containerfile`
 ----
 
