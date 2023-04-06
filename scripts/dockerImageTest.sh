@@ -1,15 +1,15 @@
 #!/bin/bash
-while getopts t:d:b:u: flag; do
+while getopts t:d:b:u: flag;
+do
     case "${flag}" in
-    t) DATE="${OPTARG}" ;;
-    d) DRIVER="${OPTARG}" ;;
-    b) BUILD="${OPTARG}";;
-    u) DOCKER_USERNAME="${OPTARG}";;
-    *) echo "Invalid option" ;;
+        t) DATE="${OPTARG}";;
+        d) DRIVER="${OPTARG}";;
+        *) echo "Invalid option";;
     esac
 done
 
-echo "Testing daily build image"
+echo "Testing daily Docker image"
+
 
 export RUNTIMEURL="liberty {\n    install {\n        runtimeUrl='https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly/$DATE/$DRIVER'\n    }\n}\n"
 
@@ -27,10 +27,9 @@ cat module-securing/build.gradle
 echo "=== module-openapi/build.gradle ==="
 cat module-openapi/build.gradle
 
-sed -i "s;FROM icr.io/appcafe/open-liberty:full-java11-openj9-ubi;FROM $DOCKER_USERNAME/olguides:$BUILD;g" module-kubernetes/Containerfile
+sed -i "s;FROM icr.io/appcafe/open-liberty:full-java11-openj9-ubi;FROM openliberty/daily:latest;g" module-kubernetes/Containerfile
 cat module-kubernetes/Containerfile
 
-sed -i "s;95;999;g" module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/StartupCheck.java
-cat module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/StartupCheck.java
+podman pull "openliberty/daily:latest"
 
-sudo -u runner ../scripts/testApp.sh
+../scripts/testApp.sh
