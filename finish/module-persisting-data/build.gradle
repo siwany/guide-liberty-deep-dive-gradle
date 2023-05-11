@@ -26,8 +26,8 @@ configurations {
 
 dependencies {
     // provided dependencies
-    providedCompile 'jakarta.platform:jakarta.jakartaee-api:9.1.0'
-    providedCompile 'org.eclipse.microprofile:microprofile:5.0'
+    providedCompile 'jakarta.platform:jakarta.jakartaee-api:10.0.0'
+    providedCompile 'org.eclipse.microprofile:microprofile:6.0'
     // tag::postgresql[]
     jdbcLib 'org.postgresql:postgresql:42.3.8'
     // end::postgresql[]
