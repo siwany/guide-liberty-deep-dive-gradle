@@ -1,4 +1,4 @@
 @echo off
 
-docker stop postgres-container
-docker rm postgres-container
+podman stop postgres-container
+podman rm postgres-container

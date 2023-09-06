@@ -142,7 +142,9 @@ cd ./finish/system || exit
 #sudo cat ./build/wlp/usr/servers/defaultServer/logs/messages.log || cat ./build/liberty-alt-output-dir/defaultServer/logs/messages.log || echo no logs
 cd ../..
 
-echo ===== Test module-jwt, health, metrics =====
+echo ===== Test module-persistind-data, jwt, health, metrics =====
+
+./scripts/startPostgres.sh
 
 cp -fr ./finish/module-jwt/* ./start/inventory
 mkdir -p ./start/inventory/src/main/liberty/config/resources/security
@@ -211,7 +213,8 @@ echo ===== Test module-containerize =====
 cd start/inventory
 
 podman images
-podman run -d --name inventory -p 9080:9080 liberty-deepdive-inventory:1.0-SNAPSHOT
+postgres_hostname="$(podman inspect -f "{{.NetworkSettings.IPAddress}}" postgres-container)"
+podman run -d --name inventory -p 9080:9080 -e POSTGRES_HOSTNAME="$postgres_hostname" liberty-deepdive-inventory:1.0-SNAPSHOT
 podman ps 
 sleep 30
 
@@ -221,6 +224,9 @@ curl http://localhost:9080/health/ready | grep "\"status\":\"UP\"" || exit 1
 
 podman stop inventory
 podman rm inventory
+
+cd ../..
+./scripts/stopPostgres.sh
 
 echo ===== TESTS PASSED =====
 exit 0

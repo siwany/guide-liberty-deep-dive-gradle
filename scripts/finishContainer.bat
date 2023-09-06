@@ -14,6 +14,7 @@ copy ".\finish\module-health-checks\src\main\java\io\openliberty\deepdive\rest\h
 copy ".\finish\module-metrics\src\main\liberty\config\server.xml" ".\start\inventory\src\main\liberty\config" >NUL
 copy ".\finish\module-metrics\src\main\java\io\openliberty\deepdive\rest\SystemResource.java" ".\start\inventory\src\main\java\io\openliberty\deepdive\rest" >NUL
 copy ".\finish\module-kubernetes\Containerfile" ".\start\inventory" >NUL
+copy ".\finish\module-kubernetes\src\main\liberty\config\server.xml" ".\start\inventory\src\main\liberty\config" >NUL
 
 cd .\start\inventory || exit
 call gradlew clean war libertyCreate installFeature deploy

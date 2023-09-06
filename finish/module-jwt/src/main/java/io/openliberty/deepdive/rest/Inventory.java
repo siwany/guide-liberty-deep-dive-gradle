@@ -11,47 +11,64 @@
 // end::copyright[]
 package io.openliberty.deepdive.rest;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.openliberty.deepdive.rest.model.SystemData;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @ApplicationScoped
+// tag::InventoryDao[]
 public class Inventory {
 
-    private List<SystemData> systems = Collections.synchronizedList(new ArrayList<>());
+    // tag::PersistenceContext[]
+    @PersistenceContext(name = "jpa-unit")
+    // end::PersistenceContext[]
+    private EntityManager em;
 
+    // tag::readAllFromInventory[]
     public List<SystemData> getSystems() {
-        return systems;
+        return em.createNamedQuery("SystemData.findAll", SystemData.class)
+                 .getResultList();
     }
+    // end::readAllFromInventory[]
 
+    // tag::readInventory[]
     public SystemData getSystem(String hostname) {
-        for (SystemData s : systems) {
-            if (s.getHostname().equalsIgnoreCase(hostname)) {
-                return s;
-            }
-        }
-        return null;
+        // tag::find[]
+        List<SystemData> systems =
+            em.createNamedQuery("SystemData.findSystem", SystemData.class)
+              .setParameter("hostname", hostname)
+              .getResultList();
+        return systems == null || systems.isEmpty() ? null : systems.get(0);
+        // end::find[]
     }
+    // end::readInventory[]
 
+    // tag::addToInventory[]
     public void add(String hostname, String osName, String javaVersion, Long heapSize) {
-        systems.add(new SystemData(hostname, osName, javaVersion, heapSize));
+        // tag::Persist[]
+        em.persist(new SystemData(hostname, osName, javaVersion, heapSize));
+        // end::Persist[]
     }
+    // end::addToInventory[]
 
+    // tag::update[]
     public void update(SystemData s) {
-        for (SystemData systemData : systems) {
-            if (systemData.getHostname().equalsIgnoreCase(s.getHostname())) {
-                systemData.setOsName(s.getOsName());
-                systemData.setJavaVersion(s.getJavaVersion());
-                systemData.setHeapSize(s.getHeapSize());
-            }
-        }
+        // tag::Merge[]
+        em.merge(s);
+        // end::Merge[]
     }
+    // end::update[]
 
-    public boolean removeSystem(SystemData s) {
-        return systems.remove(s);
+    // tag::removeSystem[]
+    public void removeSystem(SystemData s) {
+        // tag::Remove[]
+        em.remove(s);
+        // end::Remove[]
     }
+    // end::removeSystem[]
 
 }
+// end::InventoryDao[]
