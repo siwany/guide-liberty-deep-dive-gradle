@@ -13,6 +13,7 @@ cp ./finish/module-health-checks/src/main/java/io/openliberty/deepdive/rest/heal
 cp ./finish/module-metrics/src/main/liberty/config/server.xml ./start/inventory/src/main/liberty/config
 cp ./finish/module-metrics/src/main/java/io/openliberty/deepdive/rest/SystemResource.java ./start/inventory/src/main/java/io/openliberty/deepdive/rest
 cp ./finish/module-kubernetes/Containerfile ./start/inventory
+cp ./finish/module-kubernetes/src/main/liberty/config/server.xml ./start/inventory/src/main/liberty/config
 
 cd ./start/inventory || exit
 ./gradlew clean war libertyCreate installFeature deploy

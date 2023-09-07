@@ -29,6 +29,7 @@ import io.openliberty.deepdive.rest.model.SystemData;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -97,9 +98,12 @@ public class SystemResource {
         return inventory.getSystem(hostname);
     }
 
+    // tag::postTransactional[]
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    // end::postTransactional[]
     @APIResponses(value = {
         @APIResponse(responseCode = "200",
             description = "Successfully added system to inventory"),
@@ -147,6 +151,7 @@ public class SystemResource {
         return success(hostname + " was added.");
     }
 
+    // tag::putTransactional[]
     // tag::put[]
     @PUT
     // end::put[]
@@ -155,6 +160,8 @@ public class SystemResource {
     // end::putEndpoint[]
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    // end::putTransactional[]
     // tag::putRolesAllowed[]
     @RolesAllowed({ "admin", "user" })
     // end::putRolesAllowed[]
@@ -209,6 +216,7 @@ public class SystemResource {
         return success(hostname + " was updated.");
     }
 
+    // tag::deleteTransactional[]
     // tag::delete[]
     @DELETE
     // end::delete[]
@@ -216,6 +224,8 @@ public class SystemResource {
     @Path("/{hostname}")
     // end::deleteEndpoint[]
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    // end::deleteTransactional[]
     // tag::deleteRolesAllowed[]
     @RolesAllowed({ "admin" })
     // end::deleteRolesAllowed[]
@@ -247,12 +257,14 @@ public class SystemResource {
         }
     }
 
+    // tag::postTransactional[]
     // tag::addSystemClient[]
     @POST
     @Path("/client/{hostname}")
     // end::addSystemClient[]
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
     @RolesAllowed({ "admin" })
     @APIResponses(value = {
         @APIResponse(responseCode = "200",
@@ -289,4 +301,3 @@ public class SystemResource {
     }
 }
 // end::SystemResource[]
-
