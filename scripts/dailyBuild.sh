@@ -3,8 +3,6 @@ while getopts t:d:b:u: flag; do
     case "${flag}" in
     t) DATE="${OPTARG}" ;;
     d) DRIVER="${OPTARG}" ;;
-    b) BUILD="${OPTARG}";;
-    u) DOCKER_USERNAME="${OPTARG}";;
     *) echo "Invalid option" ;;
     esac
 done
@@ -27,7 +25,6 @@ cat module-securing/build.gradle
 echo "=== module-openapi/build.gradle ==="
 cat module-openapi/build.gradle
 
-sed -i "s;FROM icr.io/appcafe/open-liberty:full-java11-openj9-ubi;FROM $DOCKER_USERNAME/olguides:$BUILD;g" module-kubernetes/Containerfile
 cat module-kubernetes/Containerfile
 
 sed -i "s;95;999;g" module-health-checks/src/main/java/io/openliberty/deepdive/rest/health/StartupCheck.java
