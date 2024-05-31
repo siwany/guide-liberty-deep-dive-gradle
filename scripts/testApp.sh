@@ -156,7 +156,7 @@ cd start/inventory
 
 ./gradlew clean war libertyCreate installFeature deploy
 ./gradlew libertyStart
-sleep 20
+sleep 30
 
 
 echo ===== Test health checks =====
