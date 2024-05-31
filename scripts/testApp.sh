@@ -163,7 +163,7 @@ echo ===== Test health checks =====
 
 curl http://localhost:9080/health/started | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/live | grep "\"status\":" || exit 1
-curl http://localhost:9080/health/ready | grep "\"status\":\"UP\""
+curl http://localhost:9080/health/ready | grep "\"status\":\"UP\"" || exit 1
 
 
 echo ===== Test client REST API =====
