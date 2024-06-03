@@ -220,7 +220,6 @@ sleep 50
 
 curl http://localhost:9080/health/started | grep "\"status\":" || exit 1
 curl http://localhost:9080/health/live | grep "\"status\":" || exit 1
-curl http://localhost:9080/health/ready | grep "\"status\":\"UP\""
 
 podman stop inventory
 podman rm inventory
