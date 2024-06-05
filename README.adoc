@@ -1983,71 +1983,68 @@ build.gradle
 include::finish/module-testcontainers/build.gradle[]
 ----
 
-=== Running the application in container
+=== Running the tests
 
-Now that the `inventory` container image is built, you will run the application in container with the PostgreSQL container IP address.
+You can run the Gradle `verify` goal, which compiles the java files, starts the containers, runs the tests, and then stops the containers.
 
-Retrieve the PostgreSQL container IP address by running the following command:
+ifndef::cloud-hosted[]
+[.tab_link.windows_link]
+`*WINDOWS*`
+[.tab_link.mac_link]
+`*MAC*`
+[.tab_link.linux_link]
+`*LINUX*`
 
+[.tab_content.windows_section]
+--
 [role='command']
 ```
-podman inspect -f "{{.NetworkSettings.IPAddress }}" postgres-container
+gradlew verify
 ```
+--
 
-The command returns the PostgreSQL container IP address:
-
-[role="no_copy"]
-----
-10.88.0.10
-----
-
-Run the container with the PostgreSQL container IP address. If your PostgreSQL container IP address is not `10.88.0.10`, replace the command with the right IP address.
-
+[.tab_content.mac_section]
+--
 [role='command']
 ```
-podman run -d --name inventory -p 9080:9080 -e POSTGRES_HOSTNAME=10.88.0.10 liberty-deepdive-inventory:1.0-SNAPSHOT
+.\gradlew verify
 ```
+--
 
-The following table describes the flags in this command: 
-
-[cols="15, 100", options="header"]
-|===
-| *Flag* | *Description*
-| -d     | Runs the container in the background.
-| --name | Specifies a name for the container.
-| -p     | Maps the host ports to the container ports. For example: `-p <HOST_PORT>:<CONTAINER_PORT>`
-| -e     | Sets environment variables within the container. For example: `-e <VARIABLE_NAME>=<value>`
-|===
-
-Next, run the `podman ps` command to verify that your container is started:
-
+[.tab_content.linux_section]
+--
 [role='command']
 ```
-podman ps
+export TESTCONTAINERS_RYUK_DISABLED=true
+mvn verify
 ```
+--
+endif::[]
 
-Make sure that your container is running and show `Up` as their status:
+ifdef::cloud-hosted[]
+In this Skills Network environment, you can test the HTTP protcol only.
+```bash
+export TESTCONTAINERS_RYUK_DISABLED=true
+./gradlew verify
+```
+endif::[]
 
-[role="no_copy"]
+
+You will see the following output:
+
+[source,role="no_copy"]
 ----
-CONTAINER ID    IMAGE                                              COMMAND                CREATED          STATUS          PORTS                                        NAMES
-2b584282e0f5    localhost/liberty-deepdive-inventory:1.0-SNAPSHOT  /opt/ol/wlp/bin/s...   8 seconds ago    Up 8 second     0.0.0.0:9080->9080/tcp   inventory
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running it.io.openliberty.deepdive.rest.SystemResourceIT
+...
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 17.413 s - in it.io.openliberty.deepdive.rest.SystemResourceIT
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 ----
-
-If a problem occurs and your container exit prematurely, the container don't appear in the container
-list that the `podman ps` command displays. Instead, your container appear with an `Exited` status when you run the `podman ps -a` command. Run the `podman logs inventory` command to view the container logs for any potential problems. Run the `podman stats inventory` command to display a live stream of usage statistics for your container. You can also double-check that your `Containerfile` file is correct. When you find the cause of the issues, remove the faulty container with the `podman rm inventory` command. Rebuild your image, and start the container again.
-
-Now, you can access the application by the http://localhost:9080/inventory/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9080/openapi/ui/.
-
-When you’re finished trying out the application, run the following commands to stop the `inventory` container and the PostgreSQL container that was started in the previous section:
-
-[role='command']
-```
-podman stop inventory postgres-container
-podman rm inventory postgres-container
-```
-
-To learn how to optimize the image size, check out the https://openliberty.io/guides/containerize-podman.html#optimizing-the-image-size[Containerizing microservices with Podman guide^].
 
 
 // Starting and preparing your cluster for deployment
