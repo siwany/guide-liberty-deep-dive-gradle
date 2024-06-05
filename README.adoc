@@ -218,24 +218,7 @@ While the Liberty instance starts up, various messages display in your command-l
 [INFO] [AUDIT] CWWKF0011I: The server defaultServer is ready to run a smarter planet.
 ----
 
-When you need to stop the Liberty instance, press `CTRL+C` in the command-line session where you ran the server, or run the `libertyStop` goal from the `start/inventory` directory in another command-line session:
-
-include::{common-includes}/os-tabs.adoc[]
-[.tab_content.windows_section]
---
-[role='command']
-```
-gradlew libertyStop
-```
---
-
-[.tab_content.mac_section.linux_section]
---
-[role='command']
-```
-./gradlew libertyStop
-```
---
+When you need to stop the Liberty instance, press `CTRL+C` in the command-line session where you ran the Liberty.
 
 
 === Starting and stopping the Liberty in the background
