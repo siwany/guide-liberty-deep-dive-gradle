@@ -1833,9 +1833,9 @@ podman images
 Verify that the `liberty-deepdive-inventory:1.0-SNAPSHOT` image is listed among the container images, for example:
 [source, role="no_copy"]
 ----
-REPOSITORY                             TAG
-liberty-deepdive-inventory   1.0-SNAPSHOT
-icr.io/appcafe/open-liberty            full-java17-openj9-ubi
+REPOSITORY                       TAG
+liberty-deepdive-inventory       1.0-SNAPSHOT
+icr.io/appcafe/open-liberty      full-java17-openj9-ubi
 ----
 == Testing the microservice with Testcontainers
 
