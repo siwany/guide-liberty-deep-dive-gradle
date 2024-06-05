@@ -30,7 +30,7 @@ Liberty is a cloud-optimized Java runtime that is fast to start up with a low me
 
 == What you'll learn
 
-You will learn how to build a RESTful microservice on Liberty with Jakarta EE and MicroProfile. You will use Gradle throughout this exercise to build the microservice and to interact with the running Liberty instance. Then, you’ll build a container image for the microservice. You will also learn how to secure the REST endpoints and use JSON Web Tokens to communicate with the provided `system` secured microservice.
+You will learn how to build a RESTful microservice on Liberty with Jakarta EE and MicroProfile. You will use Gradle throughout this exercise to build the microservice and to interact with the running Liberty instance. Then, you’ll build a container image for the microservice and deploy it to Kubernetes in a Liberty Docker container. You will also learn how to secure the REST endpoints and use JSON Web Tokens to communicate with the provided `system` secured microservice.
 
 The microservice that you’ll work with is called `inventory`. The `inventory` microservice persists data into a PostgreSQL database. 
 
