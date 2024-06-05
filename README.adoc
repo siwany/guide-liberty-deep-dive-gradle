@@ -1983,7 +1983,7 @@ build.gradle
 include::finish/module-testcontainers/build.gradle[]
 ----
 
-Add each required [hotspot=testDependenies file=5]`dependency` with `test` scope, including JUnit5, Testcontainers, Log4J, JBoss RESTEasy client, Glassfish JSON, and Vert.x libraries. Also, add the [hotspot=failsafe file=5]`gradle-failsafe-plugin` plugin, so that the integration test can be run by the Gradle `verify` goal.
+Add each required [hotspot=testDependenies file=5]`dependency` with `test` scope, including JUnit5, Testcontainers, Log4J, JBoss RESTEasy client, Glassfish JSON, and Vert.x libraries. Also, add the [hotspot=failsafe file=5]`io.openliberty.tools.gradle.Liberty` plugin, so that the integration test can be run by the Gradle `verify` goal.
 
 === Running the tests
 
