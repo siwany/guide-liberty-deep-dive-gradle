@@ -551,7 +551,7 @@ Next, you can externalize your Liberty configuration and inject configuration fo
 
 === Enabling configurable ports and context root
 
-So far, you used hardcoded values to set the HTTP and HTTPS ports and the context root for the server. These configurations can be externalized so you can easily change their values when you want to deploy your microservice by different ports and context root.
+So far, you used hardcoded values to set the HTTP and HTTPS ports and the context root for the Liberty. These configurations can be externalized so you can easily change their values when you want to deploy your microservice by different ports and context root.
 
 [role='code_command hotspot file=0', subs="quotes"]
 ----
