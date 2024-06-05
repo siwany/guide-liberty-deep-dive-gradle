@@ -585,13 +585,7 @@ Set the [hotspot=war file=1]`archiveVersion` property to an empty string for the
 * [hotspot=httpsPort file=1]`liberty.var.https.port` to `9445`
 * [hotspot=contextRoot file=1]`liberty.var.context.root` to `/trial`
 
-Because you are using dev mode, these changes are automatically picked up by the Liverty instance. After you see the following message, your application server in dev mode is ready again:
-
-[role="no_copy"]
-----
-**************************************************************
-*    Liberty is running in dev mode.
-----
+Because you are using dev mode, these changes are automatically picked up by the Liberty instance.
 
 ifndef::cloud-hosted[]
 Now, you can access the application by the http://localhost:9081/trial/api/systems URL. Alternatively, for the updated OpenAPI UI, use the following URL http://localhost:9081/openapi/ui/.
@@ -620,12 +614,16 @@ When you are finished trying out changing this configuration, change the variabl
 * update [hotspot=httpsPort file=2]`liberty.var.https.port` to `9443`
 * update [hotspot=contextRoot file=2]`liberty.var.context.root` to `/inventory`.
 
-Wait until you see the following message:
-
-[role="no_copy"]
+[role='code_command hotspot file=2', subs="quotes"]
 ----
-**************************************************************
-*    Liberty is running in dev mode.
+#Replace the `build.gradle` file.#
+`build.gradle`
+----
+
+build.gradle
+[source, xml, linenums, role='code_column hide_tags=copyright']
+----
+include::finish/module-config/build.gradle[]
 ----
 
 === Injecting static configuration
